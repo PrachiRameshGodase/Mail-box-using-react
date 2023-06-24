@@ -23,10 +23,7 @@ function MailBox() {
   const sendEmailHandler = (event) => {
     event.preventDefault();
 
-    if (!email.includes("@") || !email.includes(".")) {
-        console.log("Invalid email");
-        return;
-      }
+    
     // const enteredEmail=localStorage.getItem("email")
     const emailContent = editorState.getCurrentContent().getPlainText();
     const changedemail = email.replace("@", "").replace(".", "");
