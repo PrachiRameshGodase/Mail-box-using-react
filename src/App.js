@@ -4,6 +4,7 @@ import { Route,Routes } from 'react-router-dom';
 import Header from './components/Layout/Header';
 import LoginForm from './components/Pages/LoginForm';
 import ForgotPassword from './components/Pages/ForgotPassword';
+import MailBox from './components/Pages/MailBox';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       
       <Routes>
       <Route path="/" element={ <LoginForm />} />
-      <Route path='forgotpassword' element={<ForgotPassword/>}/>
+      <Route path="/mailbox" element={ <MailBox/>} />
+      <Route path='/forgotpassword' element={<ForgotPassword/>}/>
       </Routes>
     </div>
   );

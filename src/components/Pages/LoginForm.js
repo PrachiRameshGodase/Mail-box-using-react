@@ -1,5 +1,7 @@
 import { useState, useRef} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/auth";
 
 
 function LoginForm() {
@@ -9,7 +11,10 @@ function LoginForm() {
     const passwordInputRef = useRef();
     const confirmPasswordInputRef = useRef();
 
-  
+    const dispatch=useDispatch()
+    const navigate=useNavigate()
+
+    
     
 
     const switchAuthModeHandler = () => {
@@ -66,10 +71,10 @@ function LoginForm() {
           console.log(data)
           // authCtx.login(data.idToken);
     
-        //   dispatch(authActions.islogin(data.idToken))
+          dispatch(authActions.login(data.idToken))
          
             console.log("successfully sign up")
-            // navigate("/dashboard");
+            navigate("/mailbox");
         //   authCtx.autoLogout();
           
         }).catch(err=>{
@@ -130,7 +135,7 @@ function LoginForm() {
               {!isLoading ? (
                 <button
                   type="submit"
-                  className="bg-red-600 text-white rounded-2 px-4 py-2.5 hover:bg-blue-700 text-lg"
+                  className="bg-red-600 text-white rounded-2 px-4 py-2.5 hover:bg-green-800 text-lg"
                 >
                   {isLogin ? "Login" : "Sign Up"}
                 </button>
