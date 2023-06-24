@@ -15,7 +15,7 @@ function Header() {
         <Link to="/">
               <button className='bg-gradient-to-b from-red-600 via-red-500 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded'>LOGIN</button>
             </Link>
-        </Container>
+        </Container> 
     </Navbar>
 
 

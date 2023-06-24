@@ -85,7 +85,7 @@ function LoginForm() {
     <div>
         <form onSubmit={submitHandler} className="bg-gradient-to-b to-red-800 via-yellow-300 from-green-600  rounded-lg shadow-md p-6 space-y-6 wd-full mx-auto max-w-xl mt-5">
         <h1 className="text-white text-2xl font-bold mb-3 flex justify-center ">{isLogin ? "Login" : "Sign Up"}</h1>
-
+ 
         <div>
           <label htmlFor="email" className="block text-white font-semibold mb-1">
           Your Email
