@@ -34,9 +34,9 @@ function LoginForm() {
         setisLoading(true)
         let url;
         if (isLogin) {
-          url="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDOK295ELdPlDwRD3Doj62RleCtXSGNQec"
+          url="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBmXF9ZeXJnE3iI31jhE6aZ0ycFNjYDD_I"
         } else {
-          url="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDOK295ELdPlDwRD3Doj62RleCtXSGNQec"
+          url="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBmXF9ZeXJnE3iI31jhE6aZ0ycFNjYDD_I"
     
         }
         fetch(url,
@@ -139,7 +139,7 @@ function LoginForm() {
                 >
                   {isLogin ? "Login" : "Sign Up"}
                 </button>
-              ) : (
+              ) : ( 
                 <p>Sending request...</p>
               )}
         </div>

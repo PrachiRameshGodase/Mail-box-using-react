@@ -7,7 +7,7 @@ function ForgotPassword() {
 
     const forgotPasswordHandler = () => {
         fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDOK295ELdPlDwRD3Doj62RleCtXSGNQec",
+          "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBmXF9ZeXJnE3iI31jhE6aZ0ycFNjYDD_I",
           {
             method: "POST",
             body: JSON.stringify({
@@ -29,7 +29,7 @@ function ForgotPassword() {
           })
           .catch((err) => {
             // Handle specific error type
-            console.log("A TypeError occurred:", err.message);
+            console.log("A TypeError occurred:", err.message); 
           });
       };
   return (
