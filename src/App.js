@@ -6,6 +6,7 @@ import LoginForm from './components/Pages/LoginForm';
 import ForgotPassword from './components/Pages/ForgotPassword';
 import MailBox from './components/Pages/MailBox';
 import Inbox from './components/Pages/Inbox';
+import SentMail from './components/Pages/SentMail';
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
       <Routes>
       <Route path="/" element={ <LoginForm />} />
       <Route path="/mailbox" element={ <MailBox/>} />
-      <Route path="inbox" element={<Inbox/>}/>
+      <Route path="/inbox" element={<Inbox/>}/>
+      <Route path="/sent" element={<SentMail/>}/>
       <Route path='/forgotpassword' element={<ForgotPassword/>}/>
       </Routes>
     </div>

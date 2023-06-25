@@ -4,7 +4,7 @@ import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 function MailBox() {
-  const [email, setEmail] = useState('');
+  const [recipent, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -25,49 +25,58 @@ function MailBox() {
 
     
     const enteredEmail=localStorage.getItem("email")
-    const changedEntered=enteredEmail.replace("@", "").replace(".", "")
+    const changedEnteredEmail=enteredEmail.replace("@", "").replace(".", "")
     const emailContent = editorState.getCurrentContent().getPlainText();
-    const changedemail = email.replace("@", "").replace(".", "");
-    console.log('Recipient:', email);
+    const changedemail = recipent.replace("@", "").replace(".", "");
+    console.log('Recipient:', recipent);
     console.log('Changed mail:', changedemail);
     console.log('Subject:', subject);
     console.log('Email Content:', emailContent);
     console.log('enteredEmail',enteredEmail)
 
     const newData = {
-      
       subject: subject,
       emailContent: emailContent,
-      email:email
-      
-    };
+      enteredEmail:enteredEmail
+     };
 
     console.log("newData",newData)
             // Send a POST request to store the new data in the database
-    fetch(`https://mailbox-http-default-rtdb.firebaseio.com/user/${changedEntered}.json`, {
+    fetch(`https://mailbox-http-default-rtdb.firebaseio.com/user/${changedemail}.json`, {
         method: 'POST',
         body: JSON.stringify(newData),
         headers: { 'Content-Type': 'application/json' },
       })
-        .then((response) => {
-          console.log('Email successfully send');
-          console.log(response)
-          if (response.ok) {
-            return response.json(); 
-          } else {
-            throw new Error('Failed to send email');
-          }
-        })
-        .then((data) => { 
-          console.log(data);
+      const senddata = {
+        subject: subject,
+        emailContent: emailContent,
+        recipent:recipent
+        };
+       console.log("senddata",senddata)
+      fetch(`https://mailbox-http-default-rtdb.firebaseio.com/sent/user/${changedEnteredEmail}.json`, {
+        method: 'POST',
+        body: JSON.stringify(senddata),
+        headers: { 'Content-Type': 'application/json' },
+      })
+        // .then((response) => {
+        //   console.log('Email successfully send');
+        //   console.log(response)
+        //   if (response.ok) {
+        //     return response.json(); 
+        //   } else {
+        //     throw new Error('Failed to send email');
+        //   }
+        // })
+        // .then((data) => { 
+        //   console.log(data);
             setEmail('');
             setSubject('');
             setEditorState(EditorState.createEmpty());
          
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
 
 
     
@@ -77,7 +86,7 @@ function MailBox() {
     <form onSubmit={sendEmailHandler} className="w-full mt-8 bg-green-100 p-8 shadow-md " style={{marginRight:"100px"}}>
       <div className="mb-4">
         <label className="block text-gray-700">To</label>
-        <input type="email" value={email} onChange={emailChangeHandler} className="form-input mt-1 block w-full py-2 px-2 hover:bg-red-50 rounded" />
+        <input type="email" value={recipent} onChange={emailChangeHandler} className="form-input mt-1 block w-full py-2 px-2 hover:bg-red-50 rounded" />
       </div>
       <div className="mb-4">
         <label className="block text-gray-700">Subject</label>

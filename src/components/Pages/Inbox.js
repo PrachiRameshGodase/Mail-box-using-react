@@ -39,9 +39,10 @@ function Inbox() {
       {emails.map((email, index) => (
         <ul key={index}>
           <li>
+            <p>Email: {email.enteredEmail}</p>
             <h3>Subject: {email.subject}</h3>
-            <p>Email Content: {email.emailContent}</p>
-            <p>Email: {email.email}</p>
+            <p>Email Content:{email.emailContent}</p>
+            
           </li>
         </ul>
       ))}
