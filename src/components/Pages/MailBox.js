@@ -24,21 +24,27 @@ function MailBox() {
     event.preventDefault();
 
     
-    // const enteredEmail=localStorage.getItem("email")
+    const enteredEmail=localStorage.getItem("email")
+    const changedEntered=enteredEmail.replace("@", "").replace(".", "")
     const emailContent = editorState.getCurrentContent().getPlainText();
     const changedemail = email.replace("@", "").replace(".", "");
     console.log('Recipient:', email);
     console.log('Changed mail:', changedemail);
     console.log('Subject:', subject);
     console.log('Email Content:', emailContent);
+    console.log('enteredEmail',enteredEmail)
 
     const newData = {
-      email: emailContent,
+      
       subject: subject,
+      emailContent: emailContent,
+      email:email
       
     };
-            // Send a POST request to store the new expense in the database
-    fetch(`https://mailbox-http-default-rtdb.firebaseio.com/user/${changedemail}.json`, {
+
+    console.log("newData",newData)
+            // Send a POST request to store the new data in the database
+    fetch(`https://mailbox-http-default-rtdb.firebaseio.com/user/${changedEntered}.json`, {
         method: 'POST',
         body: JSON.stringify(newData),
         headers: { 'Content-Type': 'application/json' },
