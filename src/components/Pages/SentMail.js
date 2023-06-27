@@ -106,7 +106,7 @@ export default function SentMail() {
           throw new Error('Failed to delete expense');
         }
       })
-      .catch((error) => {
+      .catch((error) => { 
         console.log(error);
       });
     }
@@ -135,7 +135,7 @@ export default function SentMail() {
                   )} */}
                   </div>
                   )}
-              </div>
+              </div> 
 
               <div>
                 <button className="text-grey-500 mx-5" onClick={() => {handleDeleteEmail(email.id)}}>
