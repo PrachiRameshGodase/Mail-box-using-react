@@ -7,7 +7,7 @@ import {  NavLink } from 'react-router-dom';
 
 function SiderBar() {
   return (
-    <div className={`${classes.sidebar} max-w-sm shadow-lg`}>
+    <div className={`${classes.sidebar} max-w-sm shadow-lg bg-gradient-to-b to-yellow-200 via-yellow-200 from-pink-400`}>
     <NavLink to="/mailbox" style={{ textDecoration: 'none' }}>
       <Button
        style={{

@@ -114,11 +114,11 @@ export default function SentMail() {
   // const counter = visible.filter((visible) => visible).length;
 
   return (
-    <div className="mx-5">
+    <div className="mx-5 mt-5">
       {/* <Button className="mx-5 mt-3 mb-3 bg-gradient-to-r from-green-800 to-red-600">Unread Messages: {counter}</Button> */}
      
         {emails.map((email, index) => (
-            <div className='rounded shadow-md mx-5 flex py-3 justify-between hover:bg-blue-50'
+            <div className='rounded shadow-md mx-5 flex py-3 justify-between hover:bg-blue-100 bg-white mb-2 cursor-pointer'
             key={email.id}
             onClick={() => toggleEmailHandler(email.id)}>
             

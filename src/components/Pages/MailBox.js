@@ -2,8 +2,10 @@ import { useState ,useEffect} from 'react';
 import { Button } from 'react-bootstrap';
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../store/auth';
+import SiderBar from '../Layout/SiderBar';
 
 function MailBox() {
   const dispatch=useDispatch()
@@ -100,19 +102,23 @@ function MailBox() {
   };
 
   return (
-    <form onSubmit={sendEmailHandler} className="w-full mt-8 bg-green-100 p-8 shadow-md " style={{marginRight:"100px"}}>
+    <>
+   
+    <section className="mt-8 bg-gradient-to-b from-yellow-200 via-pink-400 to-pink-400 p-8 shadow-lg rounded-3" style={{marginLeft:"10%",marginRight:"10%",marginTop:"70px"}}>
+    <form onSubmit={sendEmailHandler} className='bg-gradient-b from-red-600 to-red-800'>
       <div className="mb-4">
-        <label className="block text-gray-700">To</label>
+        <label className="block text-gray-700">To:</label>
         <input type="email" value={recipent} onChange={emailChangeHandler} className="form-input mt-1 block w-full py-2 px-2 hover:bg-red-50 rounded" />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">Subject</label>
+        <label className="block text-gray-700">Subject:</label>
         <input type="text" value={subject} onChange={subjectChangeHandler} className="form-input mt-1 block w-full py-2 px-2 hover:bg-red-50 rounded" />
       </div>
-      <div className="mb-4 mt-5">
+      <label className="block text-gray-700">Write Mail:</label>
+      <div className="mb-4 mt-2">
         <Editor
           editorState={editorState}
-          toolbarClassName="flex"
+          toolbarClassName= "none"
           wrapperClassName="bg-white rounded p-3 focus:outline-none"
           editorClassName="w-full h-full"
           onEditorStateChange={onEditorStateChange}
@@ -120,6 +126,8 @@ function MailBox() {
       </div>
       <Button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">Send</Button>
     </form>
+    </section>
+    </>
   );
 }
 

@@ -37,10 +37,10 @@ function Header() {
  
   return (
     <div>
-    <Navbar expand="lg" className="bg-body-tertiary bg-gradient-to-r from-red-900 via-yellow-200 to-green-400 flex justify-around">
+    <Navbar expand="lg" className="bg-body-tertiary bg-gradient-to-b from-yellow-200 to-pink-500 flex justify-around">
       <Container>
         <div className='flex' style={{marginLeft:"10px"}}>
-        {!isAuth && 
+        {!isAuth && sidebarOpen &&
         <IconButton onClick={handleSidebarToggle}>
         <MenuIcon className='text-white text-xl'/>
         </IconButton>
@@ -68,14 +68,15 @@ function Header() {
                 onOpen={() => setIsHovered(true)}
               >
                 <Avatar
-              style={{ marginRight: "10px", cursor: "pointer",background:"blue"}}
+                className='from-red-600 via-red-400 to-red-800'
+              style={{ marginRight: "10px", cursor: "pointer",background:"red"}}
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   onClick={toggleAvtar}
                 >
                   {!isHovered ? (
                     <span className={classes.avatarText}>
-                      {enteredEmail && <Avatar style={{background:"blue"}}/>}
+                      {enteredEmail && <Avatar style={{background:"red"}}/>}
                     </span>
                   ) : (
                     <span>
@@ -87,11 +88,11 @@ function Header() {
             )}
        
         {!isAuth && (<Link to="/">
-              <button className='bg-gradient-to-b from-red-600 via-red-500 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded'>LOGIN</button>
+              <button className='bg-gradient-to-b from-red-600 via-red-400 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded'>LOGIN</button>
         </Link>)}
         {isAuth && (
             <button
-              className='bg-gradient-to-b from-red-600 via-red-500 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded mx-5 '
+              className='bg-gradient-to-b from-red-600 via-red-400 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded mx-5 '
               onClick={logOutHandler}
             >
               LOGOUT
