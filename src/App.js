@@ -7,14 +7,16 @@ import ForgotPassword from './components/Pages/ForgotPassword';
 import MailBox from './components/Pages/MailBox';
 import Inbox from './components/Pages/Inbox';
 import SentMail from './components/Pages/SentMail';
+import SiderBar from './components/Layout/SiderBar';
 
 function App() {
   return (
     <div>
       <Header/>
-      
+      {/* <SiderBar/> */}
       <Routes>
       <Route path="/" element={ <LoginForm />} />
+      <Route path="/sidebar" element={<SiderBar/>}/>
       <Route path="/mailbox" element={ <MailBox/>} />
       <Route path="/inbox" element={<Inbox/>}/>
       <Route path="/sent" element={<SentMail/>}/>

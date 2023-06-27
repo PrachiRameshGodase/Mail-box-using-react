@@ -1,53 +1,154 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/auth";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Button } from "react-bootstrap";
 
-function Inbox() {
+export default function Inbox() {
   const [emails, setEmails] = useState([]);
+  const [expandedEmail, setExpandedEmail] = useState(null);
+  const [visible, setVisible] = useState([]);
+  const dispatch = useDispatch();
 
-  const enteredEmail = localStorage.getItem('email');
-  const changedEmail = enteredEmail.replace('@', '').replace('.', '');
+
+  const enteredEmail = localStorage.getItem("email");
+  const updatedEmail = enteredEmail.replace("@", "").replace(".", "");
+  
+  const token = localStorage.getItem("token");
+
+  const toggleEmailHandler = (id) => {
+    setExpandedEmail((prevId) => (prevId === id ? null : id));
+    console.log(id);
+  };
 
   useEffect(() => {
+    dispatch(authActions.login(token));
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://mailbox-http-default-rtdb.firebaseio.com/user/${changedEmail}.json`
+          `https://mail-client-92dd6-default-rtdb.firebaseio.com/user/${updatedEmail}.json`
         );
         const data = await response.json();
+        console.log("DATA", data);
+
         if (response.ok) {
-          if (data) {
-            const emailsData = Object.values(data);
-            setEmails(emailsData);
-          } else {
-            setEmails([]); // Set empty array if data is null or empty
-          }
-          console.log('Data fetched successfully');
+          const emailsData = Object.entries(data).map(([id, email]) => ({
+            id: id,
+            enteredEmail: email.enteredEmail,
+            subject: email.subject,
+            emailContent: email.emailContent,
+            receivedTime:email.receivedTime
+          }));
+          setEmails(emailsData);
+          const visibilityData = Object.entries(data).map(
+            ([id, email]) => email.visibility
+          );
+          setVisible(visibilityData);
+          console.log("Emails Data", emailsData);
         }
       } catch (error) {
-        console.error('Error in fetching data from the database:', error);
+        console.error("Error fetching data from the database:", error);
       }
     };
 
     fetchData();
-  }, [changedEmail]);
+  }, [updatedEmail, dispatch, token]);
 
-  if (emails.length === 0) {
-    return <div>Loading...</div>; // Display a loading message or spinner while data is being fetched
-  }
+  const hideBtnHandler = async (index, emailId) => {
+    setVisible((prevVisibility) => {
+      const updatedVisibility = [...prevVisibility];
+      updatedVisibility[index] = false;
+      return updatedVisibility;
+    });
+
+    try {
+      const response = await fetch(
+        `https://mail-client-92dd6-default-rtdb.firebaseio.com/user/${updatedEmail}/${emailId}.json`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            id: emailId,
+            enteredEmail: emails[index].enteredEmail,
+            subject: emails[index].subject,
+            emailContent: emails[index].emailContent,
+            receivedTime:emails[index].receivedTime,
+            visibility: false,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        console.log("PUT", response);
+        throw new Error("Error updating visibility data in the database");
+      }
+    } catch (error) {
+      console.error("Error updating visibility data in the database:", error);
+    }
+  };
+
+  const handleDeleteEmail =(emailId) => {
+    
+    fetch(
+        `https://mail-client-92dd6-default-rtdb.firebaseio.com/user/${updatedEmail}/${emailId}.json`,
+        {
+          method: "DELETE",
+        }
+      )
+
+      .then((response) => {
+        if (response.ok) {
+          console.log('Expense successfully deleted');
+          setEmails((prevExpenses) => prevExpenses.filter((email) => email.id !== emailId));
+        } else {
+          throw new Error('Failed to delete expense');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+
+  const counter = visible.filter((visible) => visible).length;
 
   return (
-    <div>
-      {emails.map((email, index) => (
-        <ul key={index}>
-          <li>
-            <p>Email: {email.enteredEmail}</p>
-            <h3>Subject: {email.subject}</h3>
-            <p>Email Content:{email.emailContent}</p>
+    <div className="mx-5">
+      <Button className="mx-5 mt-3 mb-3 bg-gradient-to-r from-green-800 to-red-600">Unread Messages: {counter}</Button>
+     
+        {emails.map((email, index) => (
+            <div className='rounded shadow-md mx-5 flex py-3 justify-between hover:bg-blue-50'
+            key={email.id}
+            onClick={() => toggleEmailHandler(email.id)}>
             
-          </li>
-        </ul>
-      ))}
+              <div className="mx-3"
+                  onClick={() => hideBtnHandler(index, email.id)}>
+                  {visible[index] && <VisibilityIcon className="text-blue-500 mx-2" />}
+                  <span className="text-lg">{email.enteredEmail}</span>
+                  <span className="mx-3 text-gray-500">{email.subject}</span>
+                  {expandedEmail === email.id && (
+                  <div className="mx-3">
+                    <span className="text-gray-400">{email.emailContent}</span>
+                  {/* {email.receivedTime && (
+                  <span className="text-gray-600 mt-3">{email.receivedTime.split(" ")}</span>
+                  )} */}
+                  </div>
+                  )}
+              </div>
+
+              <div>
+                <button className="text-grey-500 mx-5" onClick={() => {handleDeleteEmail(email.id)}}>
+                  <FontAwesomeIcon icon={faTrashAlt} className='hover:text-red-400'/>
+                </button>
+              </div>
+          
+            </div>
+          
+        ))}
+        
+        
     </div>
   );
 }
-
-export default Inbox;

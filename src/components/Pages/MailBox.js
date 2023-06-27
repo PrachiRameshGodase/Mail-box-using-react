@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import { Button } from 'react-bootstrap';
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../store/auth';
 
 function MailBox() {
+  const dispatch=useDispatch()
   const [recipent, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  
 
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
@@ -19,6 +23,14 @@ function MailBox() {
   const subjectChangeHandler = (event) => {
     setSubject(event.target.value);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log(token)
+    if (token) {
+      dispatch(authActions.login(token));
+    }
+  },[])
 
   const sendEmailHandler = (event) => {
     event.preventDefault();
@@ -33,16 +45,20 @@ function MailBox() {
     console.log('Subject:', subject);
     console.log('Email Content:', emailContent);
     console.log('enteredEmail',enteredEmail)
-
+    const currentTime = new Date().toLocaleString(); // Get the current time
+    const visibility=true;
     const newData = {
       subject: subject,
       emailContent: emailContent,
-      enteredEmail:enteredEmail
+      enteredEmail:enteredEmail,
+      receivedTime: currentTime ,// Include received time in newData
+      visibility:visibility
+
      };
 
     console.log("newData",newData)
             // Send a POST request to store the new data in the database
-    fetch(`https://mailbox-http-default-rtdb.firebaseio.com/user/${changedemail}.json`, {
+    fetch(`https://mail-client-92dd6-default-rtdb.firebaseio.com/user/${changedemail}.json`, {
         method: 'POST',
         body: JSON.stringify(newData),
         headers: { 'Content-Type': 'application/json' },
@@ -50,10 +66,11 @@ function MailBox() {
       const senddata = {
         subject: subject,
         emailContent: emailContent,
-        recipent:recipent
+        recipent:recipent,
+        sendTime: currentTime // Include received time in newData
         };
        console.log("senddata",senddata)
-      fetch(`https://mailbox-http-default-rtdb.firebaseio.com/sent/user/${changedEnteredEmail}.json`, {
+      fetch(`https://mail-client-92dd6-default-rtdb.firebaseio.com/sent/user/${changedEnteredEmail}.json`, {
         method: 'POST',
         body: JSON.stringify(senddata),
         headers: { 'Content-Type': 'application/json' },

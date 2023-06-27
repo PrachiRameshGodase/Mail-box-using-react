@@ -34,10 +34,9 @@ function LoginForm() {
         setisLoading(true)
         let url;
         if (isLogin) {
-          url="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBmXF9ZeXJnE3iI31jhE6aZ0ycFNjYDD_I"
+          url="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDdfhYYKbljPUoCi54zxzAh7RZ9GSY8wgY"
         } else {
-          url="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBmXF9ZeXJnE3iI31jhE6aZ0ycFNjYDD_I"
-    
+          url="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDdfhYYKbljPUoCi54zxzAh7RZ9GSY8wgY"
         }
         fetch(url,
           {
