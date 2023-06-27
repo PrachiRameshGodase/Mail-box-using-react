@@ -24,7 +24,11 @@ export default function Inbox() {
   };
 
   useEffect(() => {
-    dispatch(authActions.login(token));
+    const token = localStorage.getItem("token");
+    console.log(token)
+    if (token) {
+      dispatch(authActions.login(token));
+    }
     const fetchData = async () => {
       try {
         const response = await fetch(
@@ -142,7 +146,7 @@ export default function Inbox() {
                 <button className="text-grey-500 mx-5" onClick={() => {handleDeleteEmail(email.id)}}>
                   <FontAwesomeIcon icon={faTrashAlt} className='hover:text-red-400'/>
                 </button>
-              </div>
+              </div> 
           
             </div>
           
