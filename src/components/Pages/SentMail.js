@@ -73,7 +73,7 @@ export default function SentMail() {
             subject: emails[index].subject,
             emailContent: emails[index].emailContent,
             receivedTime:emails[index].receivedTime,
-            visibility: false,
+            visibility: false ,
           }),
           headers: {
             "Content-Type": "application/json",

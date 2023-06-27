@@ -30,7 +30,7 @@ function MailBox() {
     if (token) {
       dispatch(authActions.login(token));
     }
-  },[])
+  },[dispatch])
 
   const sendEmailHandler = (event) => {
     event.preventDefault();
