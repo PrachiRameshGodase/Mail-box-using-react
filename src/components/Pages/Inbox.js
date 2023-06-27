@@ -126,6 +126,11 @@ export default function Inbox() {
             <div className='rounded shadow-md mx-5 flex py-3 justify-between hover:bg-blue-50'
             key={email.id}
             onClick={() => toggleEmailHandler(email.id)}>
+               <div>
+                <button className="text-grey-500 mx-5" onClick={() => {handleDeleteEmail(email.id)}}>
+                  <FontAwesomeIcon icon={faTrashAlt} className='hover:text-red-400'/>
+                </button>
+              </div> 
             
               <div className="mx-3"
                   onClick={() => hideBtnHandler(index, email.id)}>
@@ -142,11 +147,11 @@ export default function Inbox() {
                   )}
               </div>
 
-              <div>
+              {/* <div>
                 <button className="text-grey-500 mx-5" onClick={() => {handleDeleteEmail(email.id)}}>
                   <FontAwesomeIcon icon={faTrashAlt} className='hover:text-red-400'/>
                 </button>
-              </div> 
+              </div>  */}
           
             </div>
           
