@@ -111,6 +111,10 @@ export default function SentMail() {
       });
     }
 
+    if(emails.length===0){
+      <h1>Empty SentBox!</h1>
+    }
+
   // const counter = visible.filter((visible) => visible).length;
 
   return (

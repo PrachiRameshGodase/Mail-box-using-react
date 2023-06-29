@@ -124,6 +124,10 @@ export default function Inbox() {
       });
     }
 
+    if(emails.length===0){
+      <h1>Empty Inbox!</h1>
+    }
+
   const counter = visible.filter((visible) => visible).length;
 
   return (
