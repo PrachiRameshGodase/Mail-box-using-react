@@ -87,7 +87,7 @@ function LoginForm() {
       }
   return (
     <div>
-        <form onSubmit={submitHandler} className="bg-gradient-to-b from-yellow-200 via-pink-400 to-pink-700 rounded-lg shadow-md p-6 space-y-6 wd-full mx-auto max-w-xl mt-5">
+        <form onSubmit={submitHandler} className="bg-gradient-to-b to-pink-700 via-pink-400 from-yellow-200  rounded-lg shadow-md p-6 space-y-6 wd-full mx-auto max-w-xl mt-5">
         <h1 className="text-white text-2xl font-bold mb-3 flex justify-center ">{isLogin ? "Login" : "Sign Up"}</h1>
  
         <div>

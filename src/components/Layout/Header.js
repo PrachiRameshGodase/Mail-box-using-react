@@ -2,17 +2,24 @@ import React,{useState} from 'react'
 import { Link} from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import { Nav } from 'react-bootstrap';
 import classes from "./Header.module.css"
 import { useDispatch,useSelector } from 'react-redux';
 import { authActions } from '../../store/auth';
 import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import { IconButton,Avatar,Tooltip } from '@mui/material';
+import SiderBar from './SiderBar';
+
+
 
 
 
 function Header() {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  
+    
     const [isHovered, setIsHovered] = useState(false);
     const dispatch = useDispatch();
     const navigate=useNavigate()
@@ -23,34 +30,36 @@ function Header() {
       setIsHovered((prevValue) => !prevValue);
     }
 
-    const handleSidebarToggle = () => {
-      setSidebarOpen((prevOpen) => !prevOpen);
-    };
+    
 
     const logOutHandler=()=>{
+      
     dispatch(authActions.logout());
     localStorage.removeItem("email")
+   
     navigate("/");
     }
 
+    const handleShowSidebar = () => {
+      setShowSidebar(true);
+    };
+  
+    const handleCloseSidebar = () => {
+      setShowSidebar(false);
+    };
     
  
   return (
+    <div >
     <div>
     <Navbar expand="lg" className="bg-body-tertiary bg-gradient-to-b from-yellow-200 to-pink-500 flex justify-around">
       <Container>
-        <div className='flex' style={{marginLeft:"10px"}}>
-        {!isAuth && sidebarOpen &&
-        <IconButton onClick={handleSidebarToggle}>
-        <MenuIcon className='text-white text-xl'/>
+        <div style={{display:"flex"}}>
+      
+        <IconButton onClick={handleShowSidebar}>
+                <MenuIcon className="text-white text-xl" />
         </IconButton>
-}
-
-        {isAuth && <Link to='/sidebar'>
-        <IconButton onClick={handleSidebarToggle} >
-        <MenuIcon className='text-white text-xl'/>
-        </IconButton>
-        </Link>}
+      
         <img src='https://img.icons8.com/?size=1x&id=ho8QlOYvMuG3&format=png'
         alt=''
         style={{height:"30px",marginTop:"10px"}}/>
@@ -58,7 +67,7 @@ function Header() {
         </div>
 
 
-        <div className='flex' style={{display:"flex",justifyContent:"space-between"}}>
+        <div  style={{display:"flex",justifyContent:"",width:"150px"}}>
         {isAuth && (
               <Tooltip
                 title={enteredEmail}
@@ -68,15 +77,15 @@ function Header() {
                 onOpen={() => setIsHovered(true)}
               >
                 <Avatar
-                className='from-red-600 via-red-400 to-red-800'
-              style={{ marginRight: "10px", cursor: "pointer",background:"red"}}
+                className="bg-gradient-to-b from-yellow-200 to-pink-600"
+              style={{ marginRight: "10px", cursor: "pointer"}}
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   onClick={toggleAvtar}
                 >
                   {!isHovered ? (
                     <span className={classes.avatarText}>
-                      {enteredEmail && <Avatar style={{background:"red"}}/>}
+                      {enteredEmail && <Avatar className="bg-gradient-to-b from-yellow-200 to-pink-700" />}
                     </span>
                   ) : (
                     <span>
@@ -88,11 +97,12 @@ function Header() {
             )}
        
         {!isAuth && (<Link to="/">
-              <button className='bg-gradient-to-b from-red-600 via-red-400 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded'>LOGIN</button>
+              <button className='bg-gradient-to-b from-red-600 via-red-400 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded mx-6'>LOGIN</button>
         </Link>)}
         {isAuth && (
             <button
               className='bg-gradient-to-b from-red-600 via-red-400 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded mx-5 '
+              style={{marginLeft:"20px"}}
               onClick={logOutHandler}
             >
               LOGOUT
@@ -103,9 +113,14 @@ function Header() {
         </Container> 
     </Navbar>
 
-
+    
       
     </div>
+    <div>
+    {isAuth && <SiderBar showSidebar={showSidebar} handleCloseSidebar={handleCloseSidebar} />}
+    </div>
+
+      </div>
   )
 }
 

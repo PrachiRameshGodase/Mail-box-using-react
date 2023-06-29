@@ -127,7 +127,7 @@ export default function Inbox() {
   const counter = visible.filter((visible) => visible).length;
 
   return (
-    <div className="mx-5">
+    <div className="" style={{marginLeft:"10%",marginRight:"10px"}}>
       <Button className="mx-5 mt-3 mb-3 bg-gradient-to-r from-green-800 to-red-600">Unread Mails: {counter}</Button>
      
         {emails.map((email, index) => (
